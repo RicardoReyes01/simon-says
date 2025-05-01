@@ -1,6 +1,6 @@
 // Game variables that are set at the start of the code
 let strictMode = false;
-let powerOn = false;
+let gameActive = false;
 const sequence = [];      // Stores  color pattern used in game
 let userSequence = [];    // Stores user input sequence
 let level = 1;
@@ -9,19 +9,18 @@ const levelCount = document.querySelector('.level-count');
 
 //Initalizes the game
 function startGame() {
-	if (!powerOn) {
-		powerOn = true; // turn the game on once
-	}
+	console.log("startGame called");
+	if (gameActive) return;
 
+	gameActive = true;
 	sequence.length = 0;
 	userSequence.length = 0;
 	level = 1;
 	levelCount.textContent = level;
-	changeStartBtn(); 
+
 	nextRound();
 	document.getElementById("start-btn").disabled = true;
 	document.getElementById("reset-btn").disabled = strictMode;
-	document.getElementById("power-btn").disabled = false;
 }
 
 
@@ -56,7 +55,7 @@ function playSequence() {
 
 //Takes the user's inputs
 function handleClick(button) {
-	if (powerOn) {
+	if (gameActive) {
 		const userColor = button.getAttribute("data-color");
 		userSequence.push(Number(userColor));
 
@@ -68,12 +67,11 @@ function handleClick(button) {
 				alert(`Game over! Press Start to retry from level 1.\nFINAL SCORE: ${level}`);
 				addScoreToBoard(level);
 				level = 1;
-				togglePower();
 				userSequence = [];
 				sequence.length = 0;
 				level = 1;
 				levelCount.textContent = "-";
-				powerOn = false;
+				gameActive = false;
 				disableButtons();
 				document.getElementById("power-btn").textContent = "Start";
 				document.getElementById("power-btn").disabled = false;			
