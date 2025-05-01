@@ -102,7 +102,6 @@ body {
 #score-list {
     list-style: none;
     padding: 0;
-    margin-top: 10px;
   }
   
 #score-list li {
@@ -113,6 +112,19 @@ body {
     font-weight: bold;
   }
   
+
+#reset-btn{
+    font-family: 'Balsamiq Sans', sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
 
 #start-btn:hover,
 #power-btn:hover {

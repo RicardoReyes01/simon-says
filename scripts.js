@@ -9,12 +9,17 @@ const levelCount = document.querySelector('.level-count');
 
 //Initalizes the game
 function startGame() {
+	if (!powerOn) {
+		powerOn = true; // turn the game on once
+	}
+
 	sequence.length = 0;
 	userSequence.length = 0;
 	level = 1;
 	levelCount.textContent = level;
 	nextRound();
 	document.getElementById("start-btn").disabled = true;
+	document.getElementById("reset-btn").disabled = strictMode;
 	document.getElementById("power-btn").disabled = false;
 }
 
@@ -52,7 +57,6 @@ function handleClick(button) {
 	if (powerOn) {
 		const userColor = button.getAttribute("data-color");
 		userSequence.push(Number(userColor));
-		highlightButton(userColor);  //Flashes the selected color
 
 		if (!checkSequence()) {
 			disableButtons();  //Disables input after mistake
@@ -72,6 +76,7 @@ function handleClick(button) {
 					playSequence();
 				}, 1000);
 			}
+			return;
 		} else if (userSequence.length === sequence.length) {
 			//if user gets sequence right they move on to the next level.  
 			userSequence = [];
@@ -85,6 +90,7 @@ function handleClick(button) {
 				startGame();
 			}
 		}
+		highlightButton(userColor);
 	}
 }
 
@@ -135,25 +141,24 @@ function toggleStrictMode() {
 	strictMode = !strictMode;
 }
 
-//toggles the progam to be on or off
-function togglePower() {
-	powerOn = !powerOn;
-	if (powerOn) {
-		startGame();
-		enableButtons();
-		document.getElementById("start-btn").disabled = false;
-	} else {
-		userSequence = [];
-		disableButtons();
-		document.getElementById("start-btn").disabled = true;
-	}
-}
-
+//adds score to Scoreboard
 function addScoreToBoard(level) {
 	const scoreList = document.getElementById('score-list');
 	const li = document.createElement('li');
-	li.textContent = `Level ${level}`;
+	li.textContent = `SCORE: ${level * 1000}`;
 	scoreList.appendChild(li);
   }
+
+//reset functionality for
+function resetGame() {
+	if (!powerOn || strictMode) return;
+
+	sequence.length = 0;
+	userSequence.length = 0;
+	level = 1;
+	levelCount.textContent = level;
+	nextRound();
+	document.getElementById("start-btn").disabled = true;
+}
 
   
