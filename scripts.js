@@ -1,0 +1,148 @@
+// Game variables that are set at the start of the code
+let strictMode = false;
+let powerOn = false;
+const sequence = [];      // Stores  color pattern used in game
+let userSequence = [];    // Stores user input sequence
+let level = 1;
+
+const levelCount = document.querySelector('.level-count');
+
+//Initalizes the game
+function startGame() {
+	sequence.length = 0;
+	userSequence.length = 0;
+	level = 1;
+	levelCount.textContent = level;
+	nextRound();
+	document.getElementById("start-btn").disabled = true;
+	document.getElementById("power-btn").disabled = false;
+}
+
+//gameloop that starts the next level
+function nextRound() {
+	addToSequence();     
+	playSequence();      
+}
+
+//Function used to generate color for sequence and add it to the list.
+function addToSequence() {
+	const randomColor = Math.floor(Math.random() * 4) + 1;
+	sequence.push(randomColor);
+}
+
+//plays the sequence
+function playSequence() {
+	disableButtons();  //This is used here to make sure the player doesnt give any input while the sequence is playing
+
+	let i = 0;
+	const intervalId = setInterval(() => {
+		highlightButton(sequence[i]);
+		i++;
+		if (i >= sequence.length) {
+			clearInterval(intervalId);
+			setTimeout(() => {
+				enableButtons();  //this allows the user to input again after the sequence.
+			}, 500);
+		}
+	}, 1000);
+}
+
+//Takes the user's inputs
+function handleClick(button) {
+	if (powerOn) {
+		const userColor = button.getAttribute("data-color");
+		userSequence.push(Number(userColor));
+		highlightButton(userColor);  //Flashes the selected color
+
+		if (!checkSequence()) {
+			disableButtons();  //Disables input after mistake
+
+			if (strictMode) {
+				//Restarts the game if it's on strict move
+				alert(`Game over! Press Start to retry from level 1.\nFINAL SCORE: ${level}`);
+				togglePower();
+			} else {
+				//replays the same level if strict mode is not on
+				alert(`Wrong! Pay attention and try again!`);
+				userSequence = [];
+
+				setTimeout(() => {
+					playSequence();
+				}, 1000);
+			}
+		} else if (userSequence.length === sequence.length) {
+			//if user gets sequence right they move on to the next level.  
+			userSequence = [];
+			level++;
+			levelCount.textContent = level;
+
+			if (level <= 20) {
+				setTimeout(() => nextRound(), 1000);
+			} else {
+				alert("Congratulations! You won!");
+				startGame();
+			}
+		}
+	}
+}
+
+//Compares user input to game sequence.
+function checkSequence() {
+	for (let i = 0; i < userSequence.length; i++) {
+		if (userSequence[i] !== sequence[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
+//Flashes the button when the sequence is shown
+function highlightButton(color) {
+	const button = document.querySelector(`[data-color="${color}"]`);
+	if (Number(color) == 1) {
+		button.style.backgroundColor = 'lightgreen';
+	}
+	else if (Number(color) == 2) {
+		button.style.backgroundColor = 'tomato';
+	}
+	else if (Number(color) == 3) {
+		button.style.backgroundColor = 'yellow';
+	}
+	else if (Number(color) == 4) {
+		button.style.backgroundColor = 'lightskyblue';
+	}
+	setTimeout(() => {
+		button.attributes.removeNamedItem('style');
+	}, 300);
+}
+
+//Function used to enable buttons.
+function enableButtons() {
+	const buttons = document.querySelectorAll('.simon-btn');
+	buttons.forEach(button => button.removeAttribute('disabled'));
+}
+
+//Function used to disable buttons
+function disableButtons() {
+	const buttons = document.querySelectorAll('.simon-btn');
+	buttons.forEach(button => button.setAttribute('disabled', 'true'));
+}
+
+//toggles strict modew
+function toggleStrictMode() {
+	strictMode = !strictMode;
+}
+
+//toggles the progam to be on or off
+function togglePower() {
+	powerOn = !powerOn;
+	if (powerOn) {
+		startGame();
+		enableButtons();
+		document.getElementById("start-btn").disabled = false;
+	} else {
+		userSequence = [];
+		disableButtons();
+		document.getElementById("start-btn").disabled = true;
+	}
+}
