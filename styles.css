@@ -99,6 +99,21 @@ body {
     transition: background-color 0.3s;
 }
 
+#score-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+#score-list li {
+    background-color: #e0e0e0;
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+
 #start-btn:hover,
 #power-btn:hover {
     background-color: #27ae60;

@@ -60,12 +60,14 @@ function handleClick(button) {
 			if (strictMode) {
 				//Restarts the game if it's on strict move
 				alert(`Game over! Press Start to retry from level 1.\nFINAL SCORE: ${level}`);
+				addScoreToBoard(level);
+				level = 1;
 				togglePower();
 			} else {
 				//replays the same level if strict mode is not on
 				alert(`Wrong! Pay attention and try again!`);
 				userSequence = [];
-
+				addScoreToBoard(level);
 				setTimeout(() => {
 					playSequence();
 				}, 1000);
@@ -146,3 +148,12 @@ function togglePower() {
 		document.getElementById("start-btn").disabled = true;
 	}
 }
+
+function addScoreToBoard(level) {
+	const scoreList = document.getElementById('score-list');
+	const li = document.createElement('li');
+	li.textContent = `Level ${level}`;
+	scoreList.appendChild(li);
+  }
+
+  
