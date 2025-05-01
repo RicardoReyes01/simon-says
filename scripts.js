@@ -13,11 +13,10 @@ function startGame() {
 	userSequence.length = 0;
 	level = 1;
 	levelCount.textContent = level;
+	changeStartBtn(); 
 	nextRound();
-	document.getElementById("start-btn").disabled = true;
-	document.getElementById("power-btn").disabled = false;
-	changeStartBtn();
 }
+
 
 //gameloop that starts the next level
 function nextRound() {
@@ -64,6 +63,14 @@ function handleClick(button) {
 				addScoreToBoard(level);
 				level = 1;
 				togglePower();
+				userSequence = [];
+				sequence.length = 0;
+				level = 1;
+				levelCount.textContent = "-";
+				powerOn = false;
+				disableButtons();
+				document.getElementById("power-btn").textContent = "Start";
+				document.getElementById("power-btn").disabled = false;			
 			} else {
 				//replays the same level if strict mode is not on
 				alert(`Wrong! Pay attention and try again!`);
@@ -138,21 +145,20 @@ function toggleStrictMode() {
 
 //toggles the progam to be on or off
 function togglePower() {
-	powerOn = !powerOn;
-	if (powerOn) {
+	if (!powerOn) {
+		powerOn = true;
 		startGame();
-		enableButtons();
-		document.getElementById("start-btn").disabled = false;
+		document.getElementById("power-btn").disabled = false;
 	} else {
-		userSequence = [];
-		disableButtons();
-		document.getElementById("start-btn").disabled = true;
+		// Reset the game when power is already on
+		startGame();
 	}
 }
 
+
 function changeStartBtn() {
-    const button = document.getElementById("start-btn");
-    button.textContent = "Reset Rounds";
+	const button = document.getElementById("power-btn");
+	button.textContent = "Reset Rounds";
 }
 
 function addScoreToBoard(level) {
@@ -160,6 +166,8 @@ function addScoreToBoard(level) {
 	const li = document.createElement('li');
 	li.textContent = `Level ${level}`;
 	scoreList.appendChild(li);
-  }
+}
+
+  
 
   
