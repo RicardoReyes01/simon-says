@@ -17,11 +17,13 @@ function startGame() {
 	userSequence.length = 0;
 	level = 1;
 	levelCount.textContent = level;
+	changeStartBtn(); 
 	nextRound();
 	document.getElementById("start-btn").disabled = true;
 	document.getElementById("reset-btn").disabled = strictMode;
 	document.getElementById("power-btn").disabled = false;
 }
+
 
 //gameloop that starts the next level
 function nextRound() {
@@ -67,6 +69,14 @@ function handleClick(button) {
 				addScoreToBoard(level);
 				level = 1;
 				togglePower();
+				userSequence = [];
+				sequence.length = 0;
+				level = 1;
+				levelCount.textContent = "-";
+				powerOn = false;
+				disableButtons();
+				document.getElementById("power-btn").textContent = "Start";
+				document.getElementById("power-btn").disabled = false;			
 			} else {
 				//replays the same level if strict mode is not on
 				alert(`Wrong! Pay attention and try again!`);
@@ -160,5 +170,7 @@ function resetGame() {
 	nextRound();
 	document.getElementById("start-btn").disabled = true;
 }
+
+  
 
   
