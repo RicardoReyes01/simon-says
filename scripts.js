@@ -19,8 +19,13 @@ function startGame() {
 	levelCount.textContent = level;
 
 	nextRound();
-	document.getElementById("start-btn").disabled = true;
-	document.getElementById("reset-btn").disabled = strictMode;
+	if (strictMode) {
+		document.getElementById("start-btn").disabled = false;  // allow retry in strict
+		document.getElementById("reset-btn").disabled = true;   // disable reset in strict
+	} else {
+		document.getElementById("start-btn").disabled = true;   // disable start in regular
+		document.getElementById("reset-btn").disabled = false;  // enable reset in regular
+	}
 }
 
 
@@ -146,6 +151,15 @@ function disableButtons() {
 
 //toggles strict modew
 function toggleStrictMode() {
+	if (gameActive) {
+		alert("You can't toggle strict mode during an active game.");
+
+		// Reset checkbox to its original state
+		const checkbox = document.getElementById("strict-mode");
+		checkbox.checked = strictMode; // revert to the last value
+		playSequence()
+		return;
+	}
 	strictMode = !strictMode;
 }
 
@@ -159,7 +173,7 @@ function addScoreToBoard(level) {
 
 //reset functionality for 
 function resetGame() {
-	if (!powerOn || strictMode) return;
+	if (!gameActive || strictMode) return;
 
 	sequence.length = 0;
 	userSequence.length = 0;
