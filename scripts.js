@@ -16,6 +16,7 @@ function startGame() {
 	nextRound();
 	document.getElementById("start-btn").disabled = true;
 	document.getElementById("power-btn").disabled = false;
+	changeStartBtn();
 }
 
 //gameloop that starts the next level
@@ -147,6 +148,11 @@ function togglePower() {
 		disableButtons();
 		document.getElementById("start-btn").disabled = true;
 	}
+}
+
+function changeStartBtn() {
+    const button = document.getElementById("start-btn");
+    button.textContent = "Reset Rounds";
 }
 
 function addScoreToBoard(level) {
