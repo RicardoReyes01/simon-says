@@ -159,7 +159,7 @@ function addScoreToBoard(level) {
 	scoreList.appendChild(li);
   }
 
-//reset functionality for
+//reset functionality for 
 function resetGame() {
 	if (!powerOn || strictMode) return;
 

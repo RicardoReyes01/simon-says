@@ -14,7 +14,6 @@ body {
     justify-content: center;
     align-items: center;
     gap: 200px;
-    flex-wrap: wrap;
 }
 
 .control-panel{
