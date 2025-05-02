@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=DynaPuff:wght@400..700&family=Luckiest+Guy&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="styles.css"	rel="stylesheet">
 	<title>Simon Game</title>
@@ -17,19 +17,21 @@
 	<div class="game-layout">
 		<div class="control-panel">
 			<div id="level">
-				<span>Level: 
+				<span>Level : 
 					<span class="level-count">-</span>
 				</span>
 			</div>
 			<div id="controls">
 				<div class="ctl-contain">
-					<i class="fa-solid fa-skull"></i>
-					<label for="strict-mode">Strict Mode</label>
-					<i class="fa-solid fa-skull"></i>
+				  <i class="fa-solid fa-skull"></i>
+				  <label for="strict-mode" class="strict-label">
+					Strict Mode :
+					<input type="checkbox" id="strict-mode" onchange="toggleStrictMode()">
+					<span class="checkmark"></span>
+				  </label>
+				  <i class="fa-solid fa-skull"></i>
 				</div>
-				<input type="checkbox" id="strict-mode"
-					onchange="toggleStrictMode()">
-			</div>
+			  </div>		  
 			<div class="buttons">
 				<button id="start-btn"
 						onclick="startGame()">Start
