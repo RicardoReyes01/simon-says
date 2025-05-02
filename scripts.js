@@ -4,7 +4,8 @@ let gameActive = false;
 const sequence = [];      // Stores  color pattern used in game
 let userSequence = [];    // Stores user input sequence
 let level = 1;
-
+let isPlayingSequence = false;
+const buttonSound = new Audio('content/ding.wav');
 const levelCount = document.querySelector('.level-count');
 
 //Initalizes the game
@@ -43,6 +44,7 @@ function addToSequence() {
 
 //plays the sequence
 function playSequence() {
+	isPlayingSequence = true;
 	disableButtons();  //This is used here to make sure the player doesnt give any input while the sequence is playing
 
 	let i = 0;
@@ -120,6 +122,12 @@ function checkSequence() {
 //Flashes the button when the sequence is shown
 function highlightButton(color) {
 	const button = document.querySelector(`[data-color="${color}"]`);
+
+	if (isPlayingSequence) {
+		const ding = new Audio('content/ding.wav');
+		ding.play();
+	}
+
 	if (Number(color) == 1) {
 		button.style.backgroundColor = 'lightgreen';
 	}
@@ -152,12 +160,14 @@ function disableButtons() {
 //toggles strict modew
 function toggleStrictMode() {
 	if (gameActive) {
-		alert("You can't toggle strict mode during an active game.");
+		alert("Refresh page to switch modes.");
 
 		// Reset checkbox to its original state
 		const checkbox = document.getElementById("strict-mode");
 		checkbox.checked = strictMode; // revert to the last value
-		playSequence()
+		if (strictMode == false) {
+			playSequence()
+		}
 		return;
 	}
 	strictMode = !strictMode;
@@ -167,7 +177,8 @@ function toggleStrictMode() {
 function addScoreToBoard(level) {
 	const scoreList = document.getElementById('score-list');
 	const li = document.createElement('li');
-	li.textContent = `SCORE: ${level * 1000}`;
+	const scoreNumber = scoreList.children.length + 1;
+	li.textContent = `SCORE: ${scoreNumber} : ${level * 1000}`;
 	scoreList.appendChild(li);
   }
 

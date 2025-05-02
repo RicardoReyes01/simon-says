@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="styles.css"	rel="stylesheet">
 	<title>Simon Game</title>
 </head>
@@ -21,7 +22,11 @@
 				</span>
 			</div>
 			<div id="controls">
-				<label for="strict-mode">Strict Mode</label>
+				<div class="ctl-contain">
+					<i class="fa-solid fa-skull"></i>
+					<label for="strict-mode">Strict Mode</label>
+					<i class="fa-solid fa-skull"></i>
+				</div>
 				<input type="checkbox" id="strict-mode"
 					onchange="toggleStrictMode()">
 			</div>
